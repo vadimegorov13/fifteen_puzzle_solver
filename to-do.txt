@@ -1,0 +1,13 @@
++ 2d array for 4x4 board
++ goal
++ empty tile location
++ shift functions
++ shuffle function
+- BFS
+    - visited
+    - queue
+    - test
+- Greedy
+    - test
+- A*
+    - test
