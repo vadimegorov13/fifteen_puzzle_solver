@@ -1,38 +1,48 @@
 from queue import Queue
 from copy import deepcopy
+from fifteen_puzzle import MAX_INDEX
 
 
-def successors(fp, b, e):
-    b_list = [deepcopy(b), deepcopy(b), deepcopy(b), deepcopy(b)]
-    e_list = [deepcopy(e), deepcopy(e), deepcopy(e), deepcopy(e)]
+def children(fp, b, e):
+    # Populate board list, empty tile location list, and children list
+    b_list, e_list, c_list = [None] * \
+        MAX_INDEX, [None] * MAX_INDEX, [None] * MAX_INDEX
 
-    b_list[0], e_list[0] = fp.shift_up(b_list[0], e_list[0])
-    b_list[1], e_list[1] = fp.shift_down(b_list[1], e_list[1])
-    b_list[2], e_list[2] = fp.shift_left(b_list[2], e_list[2])
-    b_list[3], e_list[3] = fp.shift_right(b_list[3], e_list[3])
+    for i in range(MAX_INDEX):
+        # Copy b and e into b_list and e_list
+        b_list[i] = deepcopy(b)
+        e_list[i] = deepcopy(e)
+        # Shift tile; Assign board, empty tile, and shift direction to the child
+        b_list[i], e_list[i] = fp.shifts[i](b_list[i], e_list[i])
+        c_list[i] = [b_list[i], e_list[i], i]
 
-    return [[b_list[0], e_list[0], 0], [b_list[1], e_list[1], 1], [b_list[2], e_list[2], 2], [b_list[3], e_list[3], 3]]
+    # Return all children
+    return [c_list[0], c_list[1], c_list[2], c_list[3]]
 
 
 def BFS(fp):
+    # Memorize visited states
     visited = []
     queue = Queue()
+    # Put root to the queue
     queue.put({"b": fp.board, "e": fp.e_tile, "p": []})
 
     while True:
+        # Solution is not found
         if queue.empty():
             return []
 
+        # Get current node
         node = queue.get()
 
-        # found a solution
+        # Found a solution
         if node["b"] == fp.goal:
             return node["p"]
 
+        # Add current node to the visited list, and add its children to the queue
         if node["b"] not in visited:
             visited.append(node["b"])
-            for child in successors(fp, node["b"], node["e"]):
+            for child in children(fp, node["b"], node["e"]):
                 if child[0] not in visited:
                     queue.put(
                         {"b": child[0], "e": child[1], "p": node["p"] + [child[2]]})
-

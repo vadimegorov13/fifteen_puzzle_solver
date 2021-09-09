@@ -3,10 +3,10 @@
 + empty tile location
 + shift functions
 + shuffle function
-- BFS
-    - visited
-    - queue
-    - test
++ BFS
+    + visited
+    + queue
+    + test
 - Greedy
     - test
 - A*
