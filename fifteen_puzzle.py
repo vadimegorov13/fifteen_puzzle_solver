@@ -2,9 +2,13 @@ from random import randint, seed
 from copy import deepcopy
 
 MAX_INDEX = 4
-BOARD = [["1 ", "2 ", "3 ", "4 "], ["5 ", "6 ", "7 ", "8 "],
-         ["9 ", "10", "11", "12"], ["13", "14", "15", "__"]]
 SHUFFLE = 20
+BOARD = [["1 ", "2 ", "3 ", "4 "],
+         ["5 ", "6 ", "7 ", "8 "],
+         ["9 ", "10", "11", "12"],
+         ["13", "14", "15", "__"]
+         ]
+
 
 class FP:
     # constructor
@@ -46,7 +50,7 @@ class FP:
             = board[e_tile[0] + x][e_tile[1] + y], board[e_tile[0]][e_tile[1]]
 
         # Update coordinates of an empty tile
-        e_tile[0], e_tile[1] =  e_tile[0] + x, e_tile[1] + y
+        e_tile[0], e_tile[1] = e_tile[0] + x, e_tile[1] + y
         return board, e_tile
 
     def shift_up(self, board, e_tile):
@@ -63,9 +67,9 @@ class FP:
 
     # Check if shift is not going out of bounds of a board
     def legal_shift(self, e_tile, x, y):
-        if e_tile[0] + x < 0 :
+        if e_tile[0] + x < 0:
             return False
-        if e_tile[0] + x > 3 :
+        if e_tile[0] + x > 3:
             return False
         if e_tile[1] + y < 0:
             return False
