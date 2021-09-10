@@ -2,7 +2,7 @@ from random import randint, seed
 from copy import deepcopy
 
 MAX_INDEX = 4
-SHUFFLE = 20
+SHUFFLE = 40
 BOARD = [["1 ", "2 ", "3 ", "4 "],
          ["5 ", "6 ", "7 ", "8 "],
          ["9 ", "10", "11", "12"],
@@ -17,6 +17,9 @@ class FP:
         self.e_tile = [MAX_INDEX - 1, MAX_INDEX - 1]
         self.shifts = {0: self.shift_up, 1: self.shift_down,
                        2: self.shift_left, 3: self.shift_right}
+
+    def set_goal(self, goal):
+        self.goal = goal
 
     def set_start(self, start):
         self.board = start
