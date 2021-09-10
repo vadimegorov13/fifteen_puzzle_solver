@@ -1,8 +1,9 @@
-from fifteen_puzzle import FP
+from fifteen_puzzle import FP, BOARD
 from AStar import AStar
 from BFS import BFS
 from os import system
 from time import sleep
+from copy import deepcopy
 
 test = [["1 ", "2 ", "3 ", "4 "],
         ["5 ", "6 ", "7 ", "__"],
@@ -34,7 +35,6 @@ def cool_display(fp, path):
 def main():
     # Initialize fifteen puzzle
     fp = FP()
-
     # Shuffle the puzzle
     # fp.shuffle_puzzle()
     fp.set_start(test2)

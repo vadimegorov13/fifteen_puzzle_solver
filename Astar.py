@@ -20,7 +20,7 @@ def children(fp, board, e_tile):
     # Return all children
     return [c_list[0], c_list[1], c_list[2], c_list[3]]
 
-
+# Get h score
 def get_h(goal, board):
     h = 0
     for x1 in range(MAX_INDEX):
@@ -31,6 +31,7 @@ def get_h(goal, board):
                         h += abs(x1 - x2) + abs(y1 - y2)
     return h
 
+# Pop the node with the lowest f score in the open list
 def min_f(open):
     index, index_of_min = 0, 0
     min = 100
@@ -43,7 +44,7 @@ def min_f(open):
             index_of_min = index
         index += 1
 
-    return index_of_min
+    return open.pop(index_of_min)
 
 def AStar(fp):
     # Create open and closed list
@@ -54,10 +55,8 @@ def AStar(fp):
     open.append(root)
 
     while True:
-
-        # Consider the node with the lowest f score in the open list
-        
-        node = open.pop(min_f(open))
+        # Pop the node with the lowest f score in the open list
+        node = min_f(open)
 
         # Solution found
         if node["b"] == fp.goal:
@@ -66,21 +65,16 @@ def AStar(fp):
         # If solution is not found put the node in the closed list
         closed.append(node)
 
-        # Look at each neighbor of the current node
+        # Look at each child of the current node
         for child in children(fp, node["b"], node["e"]):
             if child["g"] < node["g"] and child in closed:
-                # replace the neighbor with the new, lower, g value
-                # current node is now the neighbor's parent
+                # Replace the child with the new, lower, g value
+                # Current node is now the child's parent
                 node, child = child, node
             elif node["g"] < child["g"] and child in open:
-                # replace the neighbor with the new, lower, g value
-                # change the neighbor's parent to our current node
+                # Replace the child with the new, lower, g value
+                # Change the child's parent to our current node
                 node, child = child, node
             elif child not in closed and child not in open:
+                # Append current node into an open list
                 open.append({"b": child["b"], "e": child["e"], "p": node["p"] + [child["p"]], "g": node["g"] + 1, "h": child["h"]})
-
-
-# queue.put({"b": child["b"], "e": child["e"], "p": node["p"] + [child["p"]], "g": child["g"], "h": child["h"]})
-
-# Need a function to find node with the lowes f score
-# Need to store g (cost so far to reach node) value and h (manhattan) value of each node
