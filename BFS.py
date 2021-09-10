@@ -3,18 +3,18 @@ from copy import deepcopy
 from fifteen_puzzle import MAX_INDEX
 
 
-def children(fp, b, e):
+def children(fp, board, e_tile):
     # Populate board list, empty tile location list, and children list
     b_list, e_list, c_list = [None] * \
         MAX_INDEX, [None] * MAX_INDEX, [None] * MAX_INDEX
 
     for i in range(MAX_INDEX):
         # Copy b and e into b_list and e_list
-        b_list[i] = deepcopy(b)
-        e_list[i] = deepcopy(e)
+        b_list[i] = deepcopy(board)
+        e_list[i] = deepcopy(e_tile)
         # Shift tile; Assign board, empty tile, and shift direction to the child
         b_list[i], e_list[i] = fp.shifts[i](b_list[i], e_list[i])
-        c_list[i] = [b_list[i], e_list[i], i]
+        c_list[i] = {"b": b_list[i], "e": e_list[i], "p": i}
 
     # Return all children
     return [c_list[0], c_list[1], c_list[2], c_list[3]]
@@ -43,6 +43,6 @@ def BFS(fp):
         if node["b"] not in visited:
             visited.append(node["b"])
             for child in children(fp, node["b"], node["e"]):
-                if child[0] not in visited:
+                if child["b"] not in visited:
                     queue.put(
-                        {"b": child[0], "e": child[1], "p": node["p"] + [child[2]]})
+                        {"b": child["b"], "e": child["e"], "p": node["p"] + [child["p"]]})
