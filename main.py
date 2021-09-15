@@ -3,7 +3,7 @@ from AStar import AStar
 from BFS import BFS
 from os import system
 from time import sleep
-from copy import deepcopy
+from GBFS import GBFS
 
 test = [["1 ", "2 ", "3 ", "4 "],
         ["5 ", "6 ", "7 ", "__"],
@@ -45,7 +45,8 @@ def main():
     # Solve it with BFS
     print("Solving the puzzle...")
     # path = BFS(fp)
-    path = AStar(fp)
+    # path = AStar(fp)
+    path = GBFS(fp)
     print(path)
     cool_display(fp, path)
 
