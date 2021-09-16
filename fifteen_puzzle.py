@@ -35,10 +35,10 @@ class FP:
             print()
         print()
 
-    def shuffle_puzzle(self):
+    def shuffle_puzzle(self, shuffle_power = SHUFFLE):
         # shuffle the puzzle
         seed()
-        for _ in range(SHUFFLE):
+        for _ in range(shuffle_power):
             shift_num = randint(0, 3)
             self.shifts[shift_num](self.board, self.e_tile)
 
