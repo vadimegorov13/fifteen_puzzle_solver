@@ -1,5 +1,6 @@
 from copy import deepcopy
 from math import floor
+
 from fifteen_puzzle import MAX_INDEX
 
 # Citation: https://brilliant.org/wiki/a-star-search/

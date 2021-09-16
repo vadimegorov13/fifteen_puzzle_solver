@@ -1,5 +1,6 @@
-from queue import Queue
 from copy import deepcopy
+from queue import Queue
+
 from fifteen_puzzle import MAX_INDEX
 
 

@@ -1,8 +1,6 @@
-from GBFS import GBFS
-from BFS import BFS
 from copy import deepcopy
-from AStar import AStar
 from test import test
+
 from fifteen_puzzle import FP
 
 # Start List-------------------------------------------------
@@ -68,10 +66,8 @@ def get_shuffled_pair(st_shfl=20, gl_shfl=20):
     return fp.board, fp.goal
 
 
-# Append every pair into pairs list and then pass it into the test function
-
-
 def main():
+    # Append every pair into pairs list and then pass it into the test function
     pairs = []
     pairs.append({"start": start1, "goal": goal4})
     pairs.append({"start": start2, "goal": goal4})

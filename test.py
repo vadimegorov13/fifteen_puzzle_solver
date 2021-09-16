@@ -1,10 +1,11 @@
-from fifteen_puzzle import FP
-from AStar import AStar
-from BFS import BFS
-from GBFS import GBFS
-from time import perf_counter
 from copy import deepcopy
 from os import system
+from time import perf_counter
+
+from AStar import AStar
+from BFS import BFS
+from fifteen_puzzle import FP
+from GBFS import GBFS
 
 
 def puzzle_is_solved(fp, path):

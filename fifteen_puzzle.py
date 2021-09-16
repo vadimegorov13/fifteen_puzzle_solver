@@ -1,5 +1,5 @@
-from random import randint, seed
 from copy import deepcopy
+from random import randint, seed
 
 MAX_INDEX = 4
 SHUFFLE = 40

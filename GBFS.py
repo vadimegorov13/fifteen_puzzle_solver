@@ -1,6 +1,8 @@
 from copy import deepcopy
 from math import floor
+
 from fifteen_puzzle import MAX_INDEX
+
 
 def children(fp, board, e_tile):
     # Populate board list, empty tile location list, and children list
