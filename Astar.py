@@ -17,12 +17,15 @@ def children(fp, board, e_tile):
         e_list[i] = deepcopy(e_tile)
         # Shift tile; Assign board, empty tile, and shift direction to the child
         b_list[i], e_list[i] = fp.shifts[i](b_list[i], e_list[i])
-        c_list[i] = {"b": b_list[i], "e": e_list[i], "p": i, "g": 0, "h": get_h(b_list[i])}
+        c_list[i] = {"b": b_list[i], "e": e_list[i],
+                     "p": i, "g": 0, "h": get_h(b_list[i])}
 
     # Return all children
     return [c_list[0], c_list[1], c_list[2], c_list[3]]
 
 # Get h score
+
+
 def get_h(board):
     h = 0
     for i in range(MAX_INDEX):
@@ -51,12 +54,15 @@ def min_f(open):
 
     return open.pop(index_of_min)
 
+
 def AStar(fp):
     # Create open and closed list
     open = []
     closed = []
+    opened_nodes = 0
     # Put root to the open list
-    root = {"b": fp.board, "e": fp.e_tile, "p": [], "g": 0, "h": get_h(fp.board)}
+    root = {"b": fp.board, "e": fp.e_tile,
+            "p": [], "g": 0, "h": get_h(fp.board)}
     open.append(root)
 
     while True:
@@ -65,7 +71,7 @@ def AStar(fp):
 
         # Solution found
         if node["b"] == fp.goal:
-            return node["p"]
+            return node["p"], opened_nodes
 
         # If solution is not found put the node in the closed list
         closed.append(node)
@@ -82,4 +88,6 @@ def AStar(fp):
                 node, child = child, node
             elif child not in closed and child not in open:
                 # Append current node into an open list
-                open.append({"b": child["b"], "e": child["e"], "p": node["p"] + [child["p"]], "g": node["g"] + 1, "h": child["h"]})
+                opened_nodes += 1
+                open.append({"b": child["b"], "e": child["e"], "p": node["p"] + [
+                            child["p"]], "g": node["g"] + 1, "h": child["h"]})

@@ -8,15 +8,6 @@ from fifteen_puzzle import FP
 from GBFS import GBFS
 
 
-def puzzle_is_solved(fp, path):
-    for p in path:
-        fp.shifts[p](fp.board, fp.e_tile)
-
-    if fp.board == fp.goal:
-        return True
-    return False
-
-
 def cool_table_print(list_to_print):
     pair_num = 0
     pair_num_str = ""
@@ -36,7 +27,7 @@ def cool_table_print(list_to_print):
             pair_num_str = ""
 
         print("{:<10} {:<15} {:<15} {:<15} {:<15} {:<15}".format(pair_num_str,
-              "| " + l["a"], "| " + str(round(l["t"], 10)), "| N/A", "| " + str(len(l["p"])), "| " + str(l["p"])))
+              "| " + l["a"], "| " + str(round(l["t"], 10)), "| " + str(l["np"]), "| " + str(len(l["p"])), "| " + str(l["p"])))
 
 
 def test(pairs):
@@ -50,10 +41,8 @@ def test(pairs):
             fp.set_goal(deepcopy(pair["goal"]))
 
             start_t = perf_counter()
-            path = algorithm(fp)
+            path, opened_nodes = algorithm(fp)
             stop_t = perf_counter()
 
-            if puzzle_is_solved(fp, path):
-                list_to_print.append(
-                    {"a": algorithm.__name__, "t": stop_t - start_t, "p": path})
+            list_to_print.append({"a": algorithm.__name__, "t": stop_t - start_t, "p": path, "np": opened_nodes})
             cool_table_print(list_to_print)

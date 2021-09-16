@@ -48,6 +48,7 @@ def min_h(queue):
 def GBFS(fp):
     visited = []
     queue = []
+    opened_nodes = 0
 
     queue.append({"b": fp.board, "e": fp.e_tile, "p": [], "h": mdh(fp.board, fp.e_tile)})
 
@@ -56,7 +57,7 @@ def GBFS(fp):
         node = min_h(queue)
 
         if node["b"] == fp.goal:
-            return node["p"]
+            return node["p"], opened_nodes + 1
     
         visited.append(node)
 
@@ -66,4 +67,5 @@ def GBFS(fp):
             elif node["h"] < node["h"] and child in queue:
                 node, child = child, node
             elif child not in queue and child not in visited:
+                opened_nodes += 1
                 queue.append({"b": child["b"], "e": child["e"], "p": node["p"] + [child["p"]], "h": child["h"]})

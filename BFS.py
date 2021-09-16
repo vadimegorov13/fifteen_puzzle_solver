@@ -25,25 +25,27 @@ def BFS(fp):
     # Memorize visited states
     visited = []
     queue = Queue()
+    opened_nodes = 0
     # Put root to the queue
     queue.put({"b": fp.board, "e": fp.e_tile, "p": []})
 
     while True:
         # Solution is not found
         if queue.empty():
-            return []
+            return [], opened_nodes
 
         # Get current node
         node = queue.get()
 
         # Found a solution
         if node["b"] == fp.goal:
-            return node["p"]
+            return node["p"], opened_nodes + 1
 
         # Add current node to the visited list, and add its children to the queue
         if node["b"] not in visited:
             visited.append(node["b"])
             for child in children(fp, node["b"], node["e"]):
                 if child["b"] not in visited:
+                    opened_nodes += 1
                     queue.put(
                         {"b": child["b"], "e": child["e"], "p": node["p"] + [child["p"]]})
