@@ -15,22 +15,19 @@ def children(fp, board, e_tile):
         e_list[i] = deepcopy(e_tile)
         # Shift tile; Assign board, empty tile, and shift direction to the child
         b_list[i], e_list[i] = fp.shifts[i](b_list[i], e_list[i])
-        c_list[i] = {"b": b_list[i], "e": e_list[i], "p": i, "h": mdh(b_list[i], e_list[i])}
+        c_list[i] = {"b": b_list[i], "e": e_list[i], "p": i, "h": mdh(b_list[i], fp.goal)}
 
     # Return all children
     return [c_list[0], c_list[1], c_list[2], c_list[3]]
 
-def mdh(b, e):
+def mdh(b, g):
     total_dist = 0
-    for i in range(MAX_INDEX):
-        for j in range(MAX_INDEX):
-            if b[i][j] != "__":
-                tile_check = int(b[i][j])
-                goal_x = floor((tile_check - 1) / MAX_INDEX)
-                goal_y = floor((tile_check - 1) % MAX_INDEX)
-                dx = i - goal_x
-                dy = j - goal_y
-                total_dist += abs(dx) + abs(dy)
+    for x1 in range(MAX_INDEX):
+        for y1 in range(MAX_INDEX):
+            for x2 in range(MAX_INDEX):
+                for y2 in range(MAX_INDEX):
+                    if b[x1][y1] == g[x2][y2]:
+                        total_dist += abs(x1 - x2) + abs(y1 - y2)
     return total_dist
 
 
@@ -50,7 +47,7 @@ def GBFS(fp):
     queue = []
     opened_nodes = 0
 
-    queue.append({"b": fp.board, "e": fp.e_tile, "p": [], "h": mdh(fp.board, fp.e_tile)})
+    queue.append({"b": fp.board, "e": fp.e_tile, "p": [], "h": mdh(fp.board, fp.goal)})
 
     while True:
 

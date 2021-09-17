@@ -18,7 +18,7 @@ def children(fp, board, e_tile):
         # Shift tile; Assign board, empty tile, and shift direction to the child
         b_list[i], e_list[i] = fp.shifts[i](b_list[i], e_list[i])
         c_list[i] = {"b": b_list[i], "e": e_list[i],
-                     "p": i, "g": 0, "h": get_h(b_list[i])}
+                     "p": i, "g": 0, "h": get_h(b_list[i], fp.goal)}
 
     # Return all children
     return [c_list[0], c_list[1], c_list[2], c_list[3]]
@@ -26,17 +26,14 @@ def children(fp, board, e_tile):
 # Get h score
 
 
-def get_h(board):
+def get_h(board, goal):
     h = 0
-    for i in range(MAX_INDEX):
-        for j in range(MAX_INDEX):
-            if board[i][j] != "__":
-                tile_check = int(board[i][j])
-                goal_x = floor((tile_check - 1) / MAX_INDEX)
-                goal_y = floor((tile_check - 1) % MAX_INDEX)
-                dx = i - goal_x
-                dy = j - goal_y
-                h += abs(dx) + abs(dy)
+    for x1 in range(MAX_INDEX):
+        for y1 in range(MAX_INDEX):
+            for x2 in range(MAX_INDEX):
+                for y2 in range(MAX_INDEX):
+                    if board[x1][y1] == goal[x2][y2]:
+                        h += abs(x1 - x2) + abs(y1 - y2)
     return h
 
 # Pop the node with the lowest f score in the open list
@@ -62,7 +59,7 @@ def AStar(fp):
     opened_nodes = 0
     # Put root to the open list
     root = {"b": fp.board, "e": fp.e_tile,
-            "p": [], "g": 0, "h": get_h(fp.board)}
+            "p": [], "g": 0, "h": get_h(fp.board, fp.goal)}
     open.append(root)
 
     while True:
