@@ -1,5 +1,5 @@
 from copy import deepcopy
-from math import floor
+from sys import maxsize
 
 from fifteen_puzzle import MAX_INDEX
 
@@ -39,7 +39,7 @@ def get_h(board, goal):
 # Pop the node with the lowest f score in the open list
 def min_f(open):
     index, index_of_min = 0, 0
-    min = 100
+    min = maxsize
 
     for node in open:
         f = node["g"] + node["h"]

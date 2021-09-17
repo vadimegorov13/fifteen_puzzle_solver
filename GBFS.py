@@ -1,5 +1,5 @@
 from copy import deepcopy
-from math import floor
+from sys import maxsize
 
 from fifteen_puzzle import MAX_INDEX
 
@@ -33,7 +33,7 @@ def mdh(b, g):
 
 def min_h(queue):
     index, index_of_min = 0, 0
-    min = 9999
+    min = maxsize
     for node in queue:
         if node["h"] < min:
             min = node["h"]
